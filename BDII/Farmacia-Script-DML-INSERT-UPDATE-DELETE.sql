@@ -99,6 +99,8 @@ update cliente
 	set pontuacao = pontuacao + 500
 		where sexo = 'F';
 
+SET SQL_SAFE_UPDATES = 0;
+
 update cliente
 	set pontuacao = pontuacao * 1.2
 		where pontuacao <= 1000;
