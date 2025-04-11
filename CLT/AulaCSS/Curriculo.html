@@ -6,18 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="imagex/png" href="images/coding.png">
     <link rel="stylesheet" href="css/curriculo.css">
+    <style>
+        footer {
+            background-color: brown;
+            color: blue;
+        }
+    </style>
     <title>Danilo Farias</title>
 </head>
 
 <body>
-    <center>
-        <h1>Danilo Farias Soares da Silva</h1>
-        <img src="./images/daniloFarias.gif" alt="Danilo Farias" title="Danilo Farias" height="400px"><br>
-        <h3>(Analista de Sistemas)</h3>
-    </center>
+    <div class="centralizar">
+        <h1 id="grande">Danilo Farias Soares da Silva</h1>
+        <img class="foto" src="./images/daniloFarias.gif" alt="Danilo Farias" title="Danilo Farias" height="400px"><br>
+        <h2 class="cargo">(Analista de Sistemas)</h2>
+    </div>
     <hr>
     <h2>Sobre</h2>
-    <p>
+    <p class="cargo">
         Graduado em Tecnologia em Análise e Desenvolvimento de Sistemas pelo Instituto Federal de Educação, Ciência e
         Tecnologia de Pernambuco (IFPE), Mestre em Ciência da Computação pelo Centro de Informática da Universidade
         Federal de Pernambuco (UFPE), especialista em Informática em Saúde pela Universidade Federal de São Paulo
@@ -30,13 +36,13 @@
         <dd><strong>Telefone:</strong> <a href="tel:+5581981905671">(81)981905671</a></dd>
         <dd><strong>Email:</strong> <a href="mailto:dansoaresfarias@gmail.com">dansoaresfarias@gmail.com</a></dd>
     </dl>
-    <center>
+    <p class="centralizar">
         <a href="https://www.linkedin.com/in/dansoaresfarias/" target="_blank"> <img
                 src="./images/logo-linkedin-1024.png" alt="Linkedin" title="Linkedin de Danilo" height="30px"></a>
         <a href="https://github.com/dansoaresfarias" target="_blank">
             <img src="./images/gitHub.png" alt="GitHUB" title="GitHUB de Danilo" height="30px">
         </a>
-    </center>
+    </p>
     </p>
     <hr>
     <p>
@@ -59,7 +65,8 @@
     <hr>
     <h2>Experiência Profissional</h2>
     <center>
-        <table border="1" cellpadding="5" cellspacing="1" width="90%">
+        <table id="corBranca" style="font-family: Georgia, 'Times New Roman', Times, serif; color: aqua" border="1"
+            cellpadding="5" cellspacing="1" width="90%">
             <tr>
                 <th width="10%">Período</th>
                 <th>Instituição</th>
@@ -123,10 +130,9 @@
 
 </body>
 <footer>
-    <center>
-        <p>
-            Copyright © 2025 Danilo Farias. Todos os Direitos Reservados.
-        </p>
-    </center>
+    <p class="centralizar">
+        Copyright © 2025 Danilo Farias. Todos os Direitos Reservados.
+    </p>
 </footer>
+
 </html>
