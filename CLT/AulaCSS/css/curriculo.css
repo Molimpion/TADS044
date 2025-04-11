@@ -1,0 +1,26 @@
+:root {
+    --cor1: #F5EEDC;
+    --cor2: #27548A;
+    --cor3: #183B4E;
+    --cor4: #DDA853;
+    --cor5: #FFFFFF;
+    --cor6: #0b120f;
+}
+
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: var(--cor6);
+    margin: 0 5%;
+    background: var(--cor4);
+    background: linear-gradient(0deg, rgba(221, 168, 83, 1) 0%, rgba(245, 238, 220, 1) 20%, rgba(255, 255, 255, 1) 100%);
+}
+
+footer {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bolder;
+    color: var(--cor4);
+}
+
+a:link {
+    color: var(--cor4);
+}
