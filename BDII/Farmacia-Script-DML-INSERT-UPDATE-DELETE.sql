@@ -119,8 +119,10 @@ delete from cliente
 
 delete from cliente;
 
-
-
-
+start transaction;
+delete from cliente
+	where cpf in (select cliente_cpf from enderecocli where cidade = "Recife");
+commit;
+rollback;
 
 
