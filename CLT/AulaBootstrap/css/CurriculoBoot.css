@@ -11,10 +11,45 @@
 
 body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.1em;
 }
 
 footer {
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: bolder;
     font-style: italic;
+}
+
+#menuDanilo {
+    background-color: var(--cor3);
+    padding: 1em;     
+}
+
+h2.scroll {
+    scroll-margin-top: 85px;
+}
+
+a.menuDanilo {
+    color: var(--cor1);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: var(--cor3);
+}
+
+
+a.menuDanilo:hover {
+    background-color: var(--cor4);
+    color: var(--corBranca);
+}
+
+img.foto {
+    width: 350px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--cor3);
 }
