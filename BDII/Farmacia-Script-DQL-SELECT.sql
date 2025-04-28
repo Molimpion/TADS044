@@ -239,4 +239,68 @@ select cpf "CPF", upper(nome) as "Funcionário",
 				where comp is null
 				order by nome;
                 
+select dep.cpf "CPF do Dependente",
+	upper(dep.nome) "Dependente",
+	dep.parentesco "Parentesco",
+    date_format(dep.dataNasc, '%d/%m/%Y')  "Data de Nascimento",
+    timestampdiff(year, dep.dataNasc, now()) "Idade",
+    func.nome "Responsável"
+	from dependente dep
+		inner join funcionario func on dep.Funcionario_cpf = func.cpf;
 
+select func.nome "Funcionário",
+	date_format(fer.dataInicio, '%d/%m/%Y') "Data de Início",
+	date_format(fer.dataFim, '%d/%m/%Y') "Data de Fim",
+    fer.qtdDias "Quantidade de Dias",
+    fer.anoRef "Ano de Referência"
+	from ferias fer
+		inner join funcionario func on func.cpf = fer.Funcionario_cpf
+		order by func.nome;
+
+
+select func.cpf "CPF", upper(func.nome) as "Funcionário",
+    concat(func.ch, " horas") "Carga-horária", 
+    concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário", 
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão", 
+    count(dep.cpf) "Quantidade de Filhos"
+		from funcionario func
+			left join dependente dep on dep.Funcionario_cpf = func.cpf
+				group by func.cpf
+					order by func.nome;
+
+select cpf, nome, 
+	timestampdiff(year, dataNasc, now()) "idade",
+	Funcionario_cpf
+		from dependente;
+
+create view depIdade as
+	select cpf, nome, 
+		timestampdiff(year, dataNasc, now()) "idade",
+		Funcionario_cpf
+			from dependente
+				where timestampdiff(year, dataNasc, now()) <= 5;
+
+select * from depidade;
+
+select func.cpf "CPF", upper(func.nome) as "Funcionário",
+    concat(func.ch, " horas") "Carga-horária", 
+    concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário", 
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão", 
+    concat("R$ ", format(count(dep.cpf) * 280, 2, 'de_DE')) "Auxílio Creche"
+		from funcionario func
+			left join depidade dep on dep.Funcionario_cpf = func.cpf
+					group by func.cpf
+						order by func.nome;
+
+create view vRelPagamento as
+	select func.cpf "CPF", upper(func.nome) as "Funcionário",
+		concat(func.ch, " horas") "Carga-horária", 
+		concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário", 
+		concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão", 
+		concat("R$ ", format(count(dep.cpf) * 280, 2, 'de_DE')) "Auxílio Creche"
+			from funcionario func
+				left join depidade dep on dep.Funcionario_cpf = func.cpf
+						group by func.cpf
+							order by func.nome;
+                            
+select * from vrelpagamento;
