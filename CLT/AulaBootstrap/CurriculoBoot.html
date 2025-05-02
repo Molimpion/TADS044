@@ -22,6 +22,7 @@
             <a class="menuDanilo mx-2" href="#formacao">Formação Acadêmica
             </a>
             <a class="menuDanilo mx-2" href="#experiencia">Experiência Profissional</a>
+            <a class="menuDanilo mx-2" href="#portfolio">Portfólio</a>
             <a class="menuDanilo mx-2" href="#habilidades">Habilidades</a>
             <a class="menuDanilo mx-2" href="#contato">Contato</a>
             <a class="menuDanilo mx-2" href="#endereco">Endereço</a>
@@ -167,28 +168,124 @@
             </div>
         </div>
         <div class="card hrBcg my-2"></div>
-        <h2 class="scroll">Habilidades</h2>
-        <ul>
-            <li>Desenvolvimento de Sistemas</li>
-            <li>Engenharia de Software</li>
-            <li>Engenharia de Requisitos</li>
-            <li>Gestão de Processos de Negócio</li>
-            <li>Telessaúde</li>
-            <li>Informática em Saúde</li>
-            <li>Docência em Computação</li>
-            <li>Programação em Java, Python, PHP e JavaScript</li>
-            <li>Banco de Dados (MySQL, PostgreSQL)</li>
-            <li>Desenvolvimento Web (HTML, CSS, JavaScript)</li>
-            <li>Metodologias Ágeis (Scrum, Kanban)</li>
-        </ul>
+        <div id="portfolio" class="container scroll">
+            <h2>Portfólio</h2>
+            <div class="container">
+                <div class="row d-flex justify-content-center ">
+                    <div class="card mx-2" style="width: 18rem;">
+                        <img src="images/coding.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Transforme ou inicie a sua carreira em desenvolvimento
+                                com a Formação Acelerada em Programação.</p>
+                        </div>
+                        <a href="https://github.com/dansoaresfarias/SoftexBackNoite2023.2" target="_blank"
+                            class="btn">Veja aqui!</a>
+                    </div>
+                    <div class="card mx-2" style="width: 18rem;">
+                        <img src="images/coding.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                        </div>
+                    </div>
+                    <div class="card mx-2" style="width: 18rem;">
+                        <img src="images/coding.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card hrBcg my-2"></div>
-        <h2 class="scroll">Endereço</h2>
-        <center>
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4434.145777857043!2d-34.9083073337603!3d-8.063171560199036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab18d869e7548d%3A0xc9e915120c2bd6ea!2sR.%20Abd%C3%ADsio%20Veiga%20-%20Ilha%20do%20Retiro%2C%20Recife%20-%20PE%2C%2050720-725!5e0!3m2!1spt-PT!2sbr!4v1743770570331!5m2!1spt-PT!2sbr"
-                width="1100" height="350" frameborder="0" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </center>
+        <div id="habilidades" class="container scroll">
+            <h2>Habilidades</h2>
+            <div class="container">
+                <ul>
+                    <li>Desenvolvimento de Sistemas</li>
+                    <li>Engenharia de Software</li>
+                    <li>Engenharia de Requisitos</li>
+                    <li>Gestão de Processos de Negócio</li>
+                    <li>Telessaúde</li>
+                    <li>Informática em Saúde</li>
+                    <li>Docência em Computação</li>
+                    <li>Programação em Java, Python, PHP e JavaScript</li>
+                    <li>Banco de Dados (MySQL, PostgreSQL)</li>
+                    <li>Desenvolvimento Web (HTML, CSS, JavaScript)</li>
+                    <li>Metodologias Ágeis (Scrum, Kanban)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card hrBcg my-2"></div>
+        <div id="contato" class="container scroll">
+            <h2>Contato</h2>
+            <div class="container">
+                <p class="justificado">Para entrar em contato, utilize o formulário abaixo:</p>
+                <form action="">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="nome" class="form-label"><strong>Nome</strong> <span
+                                    class="obrigatorio">*</span></label>
+                            <input type="text" class="form-control" id="nome" placeholder="Informe seu nome" required>
+                        </div>
+                        <div class="col-8">
+                            <label for="sobrenome" class="form-label"><strong>Sobrenome</strong> <span
+                                    class="obrigatorio">*</span></label>
+                            <input type="text" class="form-control" id="sobrenome" placeholder="Informe seu sobrenome"
+                                required>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-6">
+                            <label for="email" class="form-label"><strong>Email</strong> <span
+                                    class="obrigatorio">*</span></label>
+                            <input type="email" class="form-control" id="email"
+                                placeholder="Informe seu email | xxxxxx@xxxxx.xxx" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="telefone" class="form-label"><strong>Telefone</strong> <span
+                                    class="obrigatorio">*</span></label>
+                            <input type="tel" class="form-control" id="telefone"
+                                placeholder="Informe seu telefone | (xx)xxxxx-xxxx"
+                                pattern="([0-9]{2})[0-9]{5}-[0-9]{4}" required>
+                        </div>
+                        <div class="row my-3">
+                            <div class="col-6">
+                                <label for="dataHora" class="form-label"><strong>Data/Hora <span
+                                            class="obrigatorio">*</span></strong></label>
+                                <input type="datetime-local" class="form-control" id="dataHora" required
+                                    min="2025-05-01" max="2025-12-31">
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <div class="col-12">
+                                <label for="mensagem" class="form-label"><strong>Mensagem</strong></label>
+                                <textarea class="form-control" id="mensagem" rows="3"
+                                    placeholder="Conte sua história..."></textarea>
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <div class="col-12 text-center">
+                                <button type="reset" class="btn formulario">Cancelar</button>
+                                <button type="submit" class="btn formulario">Enviar</button>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+        <div class="card hrBcg my-2"></div>
+        <div class="container scroll" id="endereco">
+            <h2>Endereço</h2>
+            <div class="container">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4434.145777857043!2d-34.9083073337603!3d-8.063171560199036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab18d869e7548d%3A0xc9e915120c2bd6ea!2sR.%20Abd%C3%ADsio%20Veiga%20-%20Ilha%20do%20Retiro%2C%20Recife%20-%20PE%2C%2050720-725!5e0!3m2!1spt-PT!2sbr!4v1743770570331!5m2!1spt-PT!2sbr"
+                    width="1100" height="350" frameborder="0" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
         <div class="card hrBcg my-2"></div>
     </main>
     <footer>
