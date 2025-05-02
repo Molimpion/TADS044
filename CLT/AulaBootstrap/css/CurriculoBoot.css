@@ -28,17 +28,12 @@ footer {
     scroll-margin-top: 85px;
 }
 
-table.minhatabela {
-    border-collapse: collapse;
-    width: 100%;
-    padding: 0.5em;
-}
 
-#cabecalho {
-    background-color: var(--cor3);
-    color: var(--cor1);
-    padding: 0.5em;
-    text-align: center;
+.minhatabela {
+    background-color: #183B4E !important;
+    color: #f5eedc !important;
+    padding: 0.5em !important;
+    text-align: center ;
 }
 
 a.menuDanilo {
