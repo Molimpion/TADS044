@@ -28,6 +28,19 @@ footer {
     scroll-margin-top: 85px;
 }
 
+table.minhatabela {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 0.5em;
+}
+
+#cabecalho {
+    background-color: var(--cor3);
+    color: var(--cor1);
+    padding: 0.5em;
+    text-align: center;
+}
+
 a.menuDanilo {
     color: var(--cor1);
     text-decoration: none;
