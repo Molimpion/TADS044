@@ -304,3 +304,56 @@ create view vRelPagamento as
 							order by func.nome;
                             
 select * from vrelpagamento;
+
+select func.cpf "CPF", upper(func.nome) as "Funcionário", func.email "Email", 
+	ifnull(group_concat(distinct tel.numero separator ' | '), "Não informado!") "Telefones",
+    concat(func.ch, " horas") "Carga-horária", 
+    concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário", 
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
+    concat("R$ ", format(count(dep.cpf) * 280, 2, 'de_DE')) "Auxílio Creche"
+		from funcionario func
+			left join depidade dep on dep.Funcionario_cpf = func.cpf
+            left join telefone tel on tel.Funcionario_cpf = func.cpf
+					group by func.cpf
+						order by func.nome;
+                        
+select func.cpf "CPF", func.nome "Funcionario",
+	concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário", 
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
+	crg.nome "Cargo", 
+    group_concat(dep.nome separator " | ") "Departamento"
+	from trabalhar trb
+		inner join funcionario func on func.cpf = trb.Funcionario_cpf
+        inner join cargo crg on crg.cbo = trb.Cargo_cbo
+        inner join departamento dep on dep.idDepartamento = trb.Departamento_idDepartamento
+			group by func.cpf, crg.cbo
+				order by func.nome;
+
+select func.cpf "CPF", func.nome "Funcionario",
+	concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário", 
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
+	crg.nome "Cargo", 
+    group_concat(dep.nome separator " | ") "Departamento"
+	from trabalhar trb
+		inner join funcionario func on func.cpf = trb.Funcionario_cpf
+        inner join cargo crg on crg.cbo = trb.Cargo_cbo
+        inner join departamento dep on dep.idDepartamento = trb.Departamento_idDepartamento
+			group by func.cpf, crg.cbo
+				order by count(dep.nome) desc, func.nome;
+
+-- cpf, nome, qtdVenda, Faturamento total de dinhero
+select func.cpf "CPF", func.nome "Funcionário",
+	concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário", 
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
+	count(vnd.idVenda) "Quantidade de Vendas", 
+    concat("R$ ", format(sum(vnd.valorTotal), 2, 'de_DE')) "Faturamento"
+	from funcionario func
+		inner join venda vnd on vnd.Funcionario_cpf = func.cpf
+			group by func.cpf
+				order by sum(vnd.valorTotal) desc;
+
+
+
+
+
+
