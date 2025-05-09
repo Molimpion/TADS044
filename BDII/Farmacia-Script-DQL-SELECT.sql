@@ -339,7 +339,7 @@ select func.cpf "CPF", func.nome "Funcionario",
         inner join cargo crg on crg.cbo = trb.Cargo_cbo
         inner join departamento dep on dep.idDepartamento = trb.Departamento_idDepartamento
 			group by func.cpf, crg.cbo
-				order by count(dep.nome) desc, func.nome;
+				order by func.nome, count(dep.nome) desc;
 
 -- cpf, nome, qtdVenda, Faturamento total de dinhero
 select func.cpf "CPF", func.nome "Funcionário",
@@ -361,7 +361,8 @@ select cli.nome "Cliente", cli.cpf "CPF",
 	end "Gênero",
     cli.telefone "Telefone", cli.email "Email",
     timestampdiff(year, cli.dataNasc, now()) "Idade",
-    case when timestampdiff(year, cli.dataNasc, now()) between 35 and 45 then "Agora"
+    case 
+		when timestampdiff(year, cli.dataNasc, now()) between 35 and 45 then "Agora"
 		when timestampdiff(year, cli.dataNasc, now()) between 25 and 35 then "Ainda essa semana"
         else "Quando tiver tempo"
     end "Entrar em Contato"
@@ -369,7 +370,7 @@ select cli.nome "Cliente", cli.cpf "CPF",
 		where cli.sexo = 'F'
 			order by 7, cli.nome;
 
-select cli.nome "Cliente", cli.cpf "CPF", 
+select upper(cli.nome) "Cliente", cli.cpf "CPF", 
 	cli.telefone "Telefone", cli.email "Email",
     ifnull(endcli.cidade,"Endereço não Informado") "Cidade",
     case 
@@ -383,4 +384,73 @@ select cli.nome "Cliente", cli.cpf "CPF",
 		left join planosaude ps on ps.cliente_cpf = cli.cpf
         left join enderecocli endcli on endcli.cliente_cpf = cli.cpf
 		order by 6, cli.nome;
+
+create view vRelManoel as
+	select cli.nome "Cliente", cli.cpf "CPF", 
+		cli.telefone "Telefone", cli.email "Email",
+		ifnull(endcli.cidade,"Endereço não Informado") "Cidade",
+		case 
+			when endcli.cidade like "%linda" and ps.Cliente_cpf is not null
+				then "Agora"
+			when  ps.Cliente_cpf is not null
+				then "Ainda essa semana"
+			else "Quando tiver tempo"
+		end "Entrar em Contato"
+		from cliente cli
+			left join planosaude ps on ps.cliente_cpf = cli.cpf
+			left join enderecocli endcli on endcli.cliente_cpf = cli.cpf
+			order by 6, cli.nome;
+            
+select * from vRelManoel
+	where Email like "%@gmail.com";
+    
+select substr(dataVenda, 1, 4) "Ano",
+	count(idVenda) "Quantidade de Vendas",
+    sum(valorTotal - desconto) "Faturamento"
+	from venda
+		group by substr(dataVenda, 1, 4);
+
+select upper(fp.tipo) "Forma de Pagamento",
+	count(idVenda) "Quantidade de Vendas",
+    format(sum(valorTotal - desconto), 2, 'de_DE') "Faturamento"
+	from venda vnd
+		inner join formapag fp on fp.Venda_idVenda = vnd.idVenda
+			group by fp.tipo
+				order by 3 desc;
+		
+select func.cpf "CPF", upper(func.nome) as "Funcionário", func.email "Email", 
+	ifnull(group_concat(distinct tel.numero separator ' | '), "Não informado!") "Telefones",
+    concat(func.ch, " horas") "Carga-horária", 
+    concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário", 
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
+    concat("R$ ", format(count(dep.cpf) * 280, 2, 'de_DE')) "Auxílio Creche"
+		from funcionario func
+			left join depidade dep on dep.Funcionario_cpf = func.cpf
+            left join telefone tel on tel.Funcionario_cpf = func.cpf
+				where func.salario >= (select avg(salario) from funcionario)
+					group by func.cpf
+						order by func.nome;
+
+select func.cpf "CPF", func.nome "Funcionário",
+	concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário", 
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
+	count(vnd.idVenda) "Quantidade de Vendas", 
+    concat("R$ ", format(sum(vnd.valorTotal), 2, 'de_DE')) "Faturamento"
+	from funcionario func
+		inner join venda vnd on vnd.Funcionario_cpf = func.cpf
+			where func.sexo = 'F'
+				group by func.cpf
+					having sum(vnd.valorTotal) >= 500
+						order by sum(vnd.valorTotal) desc;
+                        
+select distinct prd.nome "Produto", forn.nome "Fornecedor",
+	tel.numero "Telefone"
+	from produto prd
+		left join itenscompra icomp on icomp.Produto_idProduto = prd.idProduto
+        inner join compras comp on comp.idCompras = icomp.Compras_idCompras
+        inner join fornecedor forn on forn.cnpj = comp.Fornecedor_cnpj
+        left join telefone tel on tel.Fornecedor_cnpj = forn.cnpj;
+
+
+
 
