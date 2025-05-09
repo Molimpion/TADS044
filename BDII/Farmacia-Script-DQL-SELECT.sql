@@ -352,8 +352,35 @@ select func.cpf "CPF", func.nome "Funcionário",
 			group by func.cpf
 				order by sum(vnd.valorTotal) desc;
 
+select cli.nome "Cliente", cli.cpf "CPF", 
+	-- decode(cli.sexo, 'F', "Feminino", 'M', "Masculino", "Outro") "Gênero"
+    case cli.sexo
+		when 'F' then "Feminino"
+        when 'M' then "Masculino"
+        else "Outro"
+	end "Gênero",
+    cli.telefone "Telefone", cli.email "Email",
+    timestampdiff(year, cli.dataNasc, now()) "Idade",
+    case when timestampdiff(year, cli.dataNasc, now()) between 35 and 45 then "Agora"
+		when timestampdiff(year, cli.dataNasc, now()) between 25 and 35 then "Ainda essa semana"
+        else "Quando tiver tempo"
+    end "Entrar em Contato"
+	from cliente cli
+		where cli.sexo = 'F'
+			order by 7, cli.nome;
 
-
-
-
+select cli.nome "Cliente", cli.cpf "CPF", 
+	cli.telefone "Telefone", cli.email "Email",
+    ifnull(endcli.cidade,"Endereço não Informado") "Cidade",
+    case 
+		when endcli.cidade like "%linda" and ps.Cliente_cpf is not null
+			then "Agora"
+		when  ps.Cliente_cpf is not null
+			then "Ainda essa semana"
+        else "Quando tiver tempo"
+    end "Entrar em Contato"
+	from cliente cli
+		left join planosaude ps on ps.cliente_cpf = cli.cpf
+        left join enderecocli endcli on endcli.cliente_cpf = cli.cpf
+		order by 6, cli.nome;
 
