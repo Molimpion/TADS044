@@ -418,10 +418,9 @@ select upper(fp.tipo) "Forma de Pagamento",
 			group by fp.tipo
 				order by 3 desc;
 		
-select func.cpf "CPF", upper(func.nome) as "Funcionário", func.email "Email", 
-	ifnull(group_concat(distinct tel.numero separator ' | '), "Não informado!") "Telefones",
-    concat(func.ch, " horas") "Carga-horária", 
-    concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário", 
+select func.cpf "CPF", upper(func.nome) as "Funcionário", 
+	concat(func.ch, " horas") "Carga-horária", 
+    concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário Bruto", 
     concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
     concat("R$ ", format(count(dep.cpf) * 280, 2, 'de_DE')) "Auxílio Creche"
 		from funcionario func
@@ -442,14 +441,47 @@ select func.cpf "CPF", func.nome "Funcionário",
 				group by func.cpf
 					having sum(vnd.valorTotal) >= 500
 						order by sum(vnd.valorTotal) desc;
-                        
-select distinct prd.nome "Produto", forn.nome "Fornecedor",
-	tel.numero "Telefone"
-	from produto prd
-		left join itenscompra icomp on icomp.Produto_idProduto = prd.idProduto
-        inner join compras comp on comp.idCompras = icomp.Compras_idCompras
-        inner join fornecedor forn on forn.cnpj = comp.Fornecedor_cnpj
-        left join telefone tel on tel.Fornecedor_cnpj = forn.cnpj;
+-- PetShop | Questão 11
+select prod.nome "Nome Produto", 
+	format(icomp.valorCompra, 2, 'de_DE') "Valor Produto(R$)",
+    frc.nome "Fornecedor", frc.email "Email Fornecedor",
+    tel.numero "Telefone Fornecedor"
+	from produtos prod
+		left join itenscompra icomp on icomp.Produtos_idProduto = prod.idProduto
+        inner join compras comp on comp.idCompra = icomp.Compras_idCompra
+        inner join fornecedor frc on frc.cpf_cnpj = comp.Fornecedor_cpf_cnpj
+        left join telefone tel on tel.Fornecedor_cpf_cnpj = frc.cpf_cnpj
+			order by frc.nome;
+
+delimiter $$
+create function auxTransporte(pCPF varchar(14)) 
+	returns decimal(6,2) deterministic
+    begin
+		declare auxTrap decimal(6,2) default 0.0;
+        declare auxCidade varchar(60);
+        select cidade into auxCidade from enderecofunc
+			where Funcionario_cpf like pCPF;
+        if auxCidade like "Recife" 
+			then set auxTrap = 22 * 2 * 4.3;
+		else set auxTrap = 22 * 2 * 5.1;
+        end if;
+        return auxTrap;
+    end $$
+delimiter ;
+
+-- https://www.idinheiro.com.br/calculadoras/calculadora-de-salario-liquido/
+select func.cpf "CPF", upper(func.nome) as "Funcionário", 
+	concat(func.ch, " horas") "Carga-horária", 
+    concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário Bruto", 
+    concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
+    concat("R$ ", format(count(dep.cpf) * 280, 2, 'de_DE')) "Auxílio Creche",
+    auxTransporte(func.cpf) "Auxílio Transporte"
+		from funcionario func
+			left join depidade dep on dep.Funcionario_cpf = func.cpf
+				group by func.cpf
+					order by func.nome;
+
+
 
 
 
