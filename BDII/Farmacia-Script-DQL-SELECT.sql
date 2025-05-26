@@ -459,13 +459,57 @@ create function auxTransporte(pCPF varchar(14))
     begin
 		declare auxTrap decimal(6,2) default 0.0;
         declare auxCidade varchar(60);
+        declare auxSalario decimal(7,2);
         select cidade into auxCidade from enderecofunc
 			where Funcionario_cpf like pCPF;
+		select salario  into auxSalario from funcionario
+			where cpf like pCPF;
         if auxCidade like "Recife" 
 			then set auxTrap = 22 * 2 * 4.3;
 		else set auxTrap = 22 * 2 * 5.1;
         end if;
-        return auxTrap;
+        set auxTrap = auxTrap - auxSalario * 0.06;
+        if auxTrap > 0 then return auxTrap;
+		else return 0.0;
+        end if;
+    end $$
+delimiter ;
+
+delimiter $$
+create function calcINSS(pSalario decimal(7,2))
+	returns decimal(6,2) deterministic
+    begin
+		declare inss decimal(6,2);
+        if pSalario <= 1518 
+			then set inss = pSalario * 0.075;
+		elseif pSalario > 1518 and pSalario <= 2793.88
+			then set inss = pSalario * 0.09;
+		elseif pSalario > 2793.88 and pSalario <= 4190.83
+			then set inss = pSalario * 0.12;
+		elseif pSalario > 4190.83 and pSalario <= 8157.41
+			then set inss = pSalario * 0.14;
+		else set inss = 8157.41 * 0.14;
+        end if;
+        return inss;
+    end $$
+delimiter ;
+
+delimiter $$
+create function calcIRRF(pSalario decimal(7,2))
+	returns decimal(6,2) deterministic
+    begin
+		declare IRRF decimal(6,2);
+        if pSalario <= 2259.20 
+			then set IRRF = 0.0;
+		elseif pSalario > 2259.20 and pSalario <= 2826.65
+			then set IRRF = pSalario * 0.075;
+		elseif pSalario > 2826.65 and pSalario <= 3751.05
+			then set IRRF = pSalario * 0.15;
+		elseif pSalario > 3751.05 and pSalario <= 4664.68
+			then set IRRF = pSalario * 0.225;
+		else set IRRF = pSalario * 0.275;
+        end if;
+        return IRRF;
     end $$
 delimiter ;
 
@@ -475,7 +519,13 @@ select func.cpf "CPF", upper(func.nome) as "Funcionário",
     concat("R$ ", format(func.salario, 2, 'de_DE')) "Salário Bruto", 
     concat("R$ ", format(func.comissao, 2, 'de_DE')) "Comissão",
     concat("R$ ", format(count(dep.cpf) * 280, 2, 'de_DE')) "Auxílio Creche",
-    auxTransporte(func.cpf) "Auxílio Transporte"
+    concat("R$ ", format(auxTransporte(func.cpf), 2, 'de_DE')) "Auxílio Transporte",
+    concat("R$ -", format(calcINSS(func.salario), 2, 'de_DE')) "INSS",
+    concat("R$ -", format(calcIRRF(func.salario), 2, 'de_DE')) "IRRF",
+    concat("R$ ", format(func.salario + func.comissao + 
+		count(dep.cpf) * 280 + auxTransporte(func.cpf) - 
+        calcINSS(func.salario) - calcIRRF(func.salario)
+		, 2, 'de_DE'))"Salário Líquido"
 		from funcionario func
 			left join depidade dep on dep.Funcionario_cpf = func.cpf
 				group by func.cpf
