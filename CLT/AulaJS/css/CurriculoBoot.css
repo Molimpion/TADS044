@@ -1,0 +1,103 @@
+:root {
+    --cor1: #f5eedc;
+    --cor2: #27548A;
+    --cor3: #183B4E;
+    --cor4: #DDA853;
+    --cor5: #FFFFFF;
+    --cor6: #0b0d12;
+    --corPreta: #000000;
+    --corBranca: #FFFFFF;
+}
+
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.1em;
+    background-color: var(--corBranca);
+}
+
+footer {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#menuDanilo {
+    background-color: var(--cor3);
+    padding: 1em;     
+}
+
+.scroll {
+    scroll-margin-top: 85px;
+}
+
+
+.cabecalho {
+    background-color: var(--cor3) !important;
+    color: var(--cor1) !important;
+    padding: 0.5em !important;
+    text-align: center;
+}
+
+a.menuDanilo {
+    color: var(--cor1);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: var(--cor3);
+}
+
+
+a.menuDanilo:hover {
+    background-color: var(--cor4);
+    color: var(--corBranca);
+}
+
+img.foto {
+    width: 350px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--cor3);
+}
+
+div.hrBcg {
+    background-color: var(--cor4);
+}
+
+p.justificado {
+    text-align: justify;
+}
+
+footer {
+    background-color: var(--cor3);
+    color: var(--cor1);
+    padding: 1em;
+    text-align: center;
+}
+
+.formulario {
+    background-color: var(--cor3);
+    color: var(--cor1);
+    padding: 0.5em;
+    border-radius: 0.5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.formulario:hover {
+    background-color: var(--cor4);
+    color: var(--corBranca);
+}
+
+.formulario:active {
+    background-color: var(--cor1);
+    color: var(--cor3);
+}
+
+.obrigatorio {
+    color: var(--cor4)
+}
+
+.tab {
+    margin-left: 1em;
+}
