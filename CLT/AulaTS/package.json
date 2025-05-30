@@ -1,0 +1,28 @@
+{
+  "name": "aulats",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev src/index.ts",
+    "build": "rimraf .build && tsc",
+    "start": "node build/index.js"
+  },
+  "keywords": [
+    "Ensino",
+    "TypeScript",
+    "Node.js",
+    "SENAC",
+    "PE"
+  ],
+  "author": "Danilo Farias",
+  "license": "ISC",
+  "description": "Projeto de exemplo para o curso de TypeScript do SENAC PE",
+  "dependencies": {
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.4"
+  }
+}
