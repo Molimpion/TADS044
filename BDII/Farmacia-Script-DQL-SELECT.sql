@@ -531,6 +531,54 @@ select func.cpf "CPF", upper(func.nome) as "Funcionário",
 				group by func.cpf
 					order by func.nome;
 
+delimiter $$
+create procedure cadFuncionario(in pcpf varchar(14),
+								in pnome varchar(60) ,
+								in pnomeSocial varchar(45) ,
+								in pemail varchar(45) ,
+								in psexo char(1) ,
+								in pestadoCivil varchar(15) ,
+								in pdataNasc date ,
+								in pch int ,
+								in psalario decimal(7,2),
+								in pcomissao decimal(6,2),
+								in pdataAdm datetime,
+                                in pnumTel1 varchar(15),
+                                in pnumTel2 varchar(15),
+                                in pnumTel3 varchar(15),
+                                in puf char(2),
+								in pcidade varchar(60),
+								in pbairro varchar(60),
+								in prua varchar(70),
+								in pnumero int,
+								in pcomp varchar(45),
+								in pcep varchar(9))
+	begin
+		insert into funcionario
+			values (pcpf,pnome,pnomeSocial,pemail,psexo,pestadoCivil,
+						pdataNasc,pch,psalario,pcomissao,pdataAdm, null, 0.0);
+		insert into telefone (numero, funcionario_cpf)
+			value (pnumTel1, pcpf);
+		if pnumTel2 is not null 
+			then insert into telefone (numero, Funcionario_cpf)
+								value (pnumTel2, pcpf);
+		end if;
+        if pnumTel3 is not null 
+			then insert into telefone (numero, Funcionario_cpf)
+								value (pnumTel3, pcpf);
+		end if;
+        insert into enderecofunc
+			value (pcpf,puf,pcidade,pbairro,prua,pnumero,pcomp,pcep);
+    end $$
+delimiter ;
+
+call cadFuncionario("161.661.116-66", "Arthur Silveira de Paula", null, 
+	"arthur.silveira@gmail.com", "M", "Solteiro", '2004-07-14', 30, 2000,
+	0.0, '2025-06-02 08:00', '(81)98507-0785', '(81)98002-8922', null, 'PE',
+    'Recife', 'Jardim São Paulo', 'Rua Carpina', 345, null, '50781-660');
+
+
+
 
 
 
