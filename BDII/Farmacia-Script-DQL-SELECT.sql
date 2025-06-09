@@ -577,10 +577,26 @@ call cadFuncionario("161.661.116-66", "Arthur Silveira de Paula", null,
 	0.0, '2025-06-02 08:00', '(81)98507-0785', '(81)98002-8922', null, 'PE',
     'Recife', 'Jardim São Paulo', 'Rua Carpina', 345, null, '50781-660');
 
+delimiter $$
+create trigger tgrAftInsertItensVendaProd after insert
+	on itensvendaprod
+	for each row
+		begin
+			update produto
+				set quantidade = quantidade - new.quantidade
+					where idProduto = new.Produto_idProduto;
+			update venda
+				set valorTotal = valorTotal + (new.quantidade * new.valorDeVenda) - new.descontoProd
+					where idVenda = new.Venda_idVenda;
+		end $$
+delimiter ;
 
+insert into venda (dataVenda, valorTotal, desconto, Funcionario_cpf, Cliente_cpf)
+	value (now(), 0.0, 0, "123.456.789-02", "432.109.876-54");
 
-
-
-
+insert into itensvendaprod
+	values (264, 3, 15, 3, 15), 
+			(264, 9, 40, 2, 0),
+            (264, 13, 15, 3, 0);
 
 
