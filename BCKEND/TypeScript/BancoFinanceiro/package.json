@@ -2,7 +2,7 @@
   "name": "bancofinanceiro",
   "version": "1.0.0",
   "description": "Projeto de um sistema bancário simples desenvolvido em TypeScript para fins educacionais.",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev src/index.ts",
