@@ -12,14 +12,17 @@ public class Transacao {
 	private Date data;
 	private double valor;
 	private Cliente clienteTransferencia;
+	private String infoPagamento;
 	private char tipoValor;
 
-	public Transacao(TipoTransacao tipo, Date data, double valor, Cliente clienteTransferencia, char tipoValor) {
+	public Transacao(TipoTransacao tipo, Date data, double valor, 
+			Cliente clienteTransferencia, String infoPagamento, char tipoValor) {
 		super();
 		this.tipo = tipo;
 		this.data = data;
 		this.valor = valor;
 		this.clienteTransferencia = clienteTransferencia;
+		this.infoPagamento = infoPagamento;
 		this.tipoValor = tipoValor;
 	}
 
@@ -38,6 +41,10 @@ public class Transacao {
 	public Cliente getClienteTransferencia() {
 		return clienteTransferencia;
 	}
+	
+	public String getInfoPagamento() {
+		return infoPagamento;
+	}
 
 	public char getTipoValor() {
 		return tipoValor;
@@ -46,14 +53,17 @@ public class Transacao {
 	@Override
 	public String toString() {
 		if (clienteTransferencia != null) {
-			return data.getDay() + "/" + data.getMonth()  + "/" + 
-					data.getYear() + "\t" + tipo + " - " 
-					+ clienteTransferencia + "\t" + valor + tipoValor;			
+			return data.getDate() + "/" + (data.getMonth()+1)  + "/" + 
+					(data.getYear()+1900) + "\t" + tipo + " - " 
+					+ clienteTransferencia.getNome() + "\t" + tipoValor + " R$ "+ valor;			
+		} else if(infoPagamento != null) {
+			return data.getDate() + "/" + (data.getMonth()+1)  + "/" +  
+					(data.getYear()+1900) + "\t" + tipo + " - " 
+					+ infoPagamento + "\t" + tipoValor + " R$ "+ valor;
 		} else {
-			return data.getDay() + "/" + data.getMonth()  + "/" + 
-					data.getYear() + "\t" + tipo + "\t" + valor + 
-					tipoValor;
-		}		
+			return data.getDate() + "/" + (data.getMonth()+1)  + "/" + 
+					(data.getYear()+1900) + "\t" + tipo + "\t" + tipoValor + " R$ "+ valor;
+		}
 		
 	}	
 

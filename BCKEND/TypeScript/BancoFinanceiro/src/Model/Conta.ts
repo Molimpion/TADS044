@@ -1,8 +1,10 @@
 import { Agencia } from "./Agencia";
 import { Cliente } from "./Cliente";
-import { TipoTransacao, Transacao } from "./Transacao";
+import { Transacao } from "./Transacao";
+import { TipoTransacao } from "./Transacao";
 
 export class Conta {
+
     private cliente: Cliente;
     private numero: number;
     private agencia: Agencia;
@@ -21,36 +23,6 @@ export class Conta {
         this.transacoes = [];
     }
 
-    public depositar(valor: number): boolean {
-        if (valor <= 0 || !this.status) {
-            console.log("Depósito inválido ou conta inativa.");
-            return false;
-        }else {
-            this.saldo += valor;
-            const transacao = new Transacao(TipoTransacao.DEPOSITO, valor, 
-                '+');
-            this.transacoes.push(transacao);
-            return true;
-        }
-    }
-
-    public sacar(valor: number): boolean {
-        if (valor <= 0 || valor > this.saldo || !this.status) {
-            console.log("Saque inválido, saldo insuficiente ou conta inativa.");
-            return false;
-        } else {
-            this.saldo -= valor;
-            const transacao = new Transacao(TipoTransacao.SAQUE, valor, 
-                '-');
-            this.transacoes.push(transacao);
-            return true;
-        }
-    }
-
-    // transferir para outra conta
-
-    // gerar extrato
-
     public getCliente(): Cliente {
         return this.cliente;
     }
@@ -65,10 +37,85 @@ export class Conta {
 
     public getDataCriacao(): Date {
         return this.dataCriacao;
-    }  
+    }
 
-    public isAtiva(): boolean {
+    public getSaldo(): number {
+        return this.saldo;
+    }
+
+    public getStatus(): boolean {
         return this.status;
+    }
+
+    public getTransacoes(): Transacao[] {
+        return this.transacoes;
+    }
+
+    //sacar
+    public sacar(valor: number): boolean {
+        if(this.status && valor > 0 && this.saldo >= valor) {
+            this.saldo -= valor;
+            const transacao = new Transacao(TipoTransacao.SAQUE, valor, "-");
+            this.transacoes.push(transacao);
+            return true;
+        }
+        console.log("Saque não realizado. Verifique o status da conta, o valor solicitado e o saldo disponível.");
+        return false;
+    }
+	
+	//depositar
+	public depositar(valor: number): boolean {
+        if(this.status && valor > 0) {
+            this.saldo += valor;
+            const transacao = new Transacao(TipoTransacao.DEPOSITO, valor, "+");
+            this.transacoes.push(transacao);
+            return true;
+        }
+        console.log("Depósito não realizado. Verifique o status da conta e o valor solicitado.");
+        return false;
+    }
+
+    //pagar
+    public realizarPagamento(valor: number, infoPagamento: string): boolean {
+        if(this.status && infoPagamento && valor > 0 && this.saldo >= valor) {
+            this.saldo -= valor;
+            const transacao = new Transacao(TipoTransacao.PAGAMENTO, valor, "-", undefined, infoPagamento);
+            this.transacoes.push(transacao);
+            return true;
+        }
+        console.log("Pagamento não realizado. Verifique o status da conta, o valor solicitado e o saldo disponível.");
+        return false;
+    }
+
+	//transferir
+    public transferir(valor: number, contaDestino: Conta): boolean {
+        if(this.status && contaDestino.getStatus() && valor > 0 && this.saldo >= valor) {
+            this.saldo -= valor;
+            contaDestino.saldo += valor;
+            const transacaoSaida = new Transacao(TipoTransacao.TRANSFERENCIA, valor, "-", contaDestino.getCliente());
+            const transacaoEntrada = new Transacao(TipoTransacao.TRANSFERENCIA, valor, "+", this.cliente);
+            this.transacoes.push(transacaoSaida);
+            contaDestino.transacoes.push(transacaoEntrada);
+            return true;
+        }
+        console.log("Transferência não realizada. Verifique o status das contas, o valor solicitado e o saldo disponível.");
+        return false;
+    }
+
+	//imprimir extrato
+    public imprimirExtrato(): void {
+        console.log(`\n--- Extrato da Conta ---`);
+        console.log(`Cliente: ${this.cliente.getNome()}`);
+        console.log(`Número da Conta: ${this.numero}`);
+        console.log(`Agência: ${this.agencia.getNumero()}`);        
+        if(this.transacoes.length === 0) {
+            console.log("Nenhuma transação realizada.");
+        } else {
+            this.transacoes.forEach((transacao, index) => {
+                console.log(`\nTransação ${index + 1}:\n${transacao.toString()}`);
+            });
+        }
+        console.log(`Saldo Atual: R$ ${this.saldo.toFixed(2)}\n`);
     }
 
 }
