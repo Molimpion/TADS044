@@ -2,7 +2,8 @@
 import { Agencia } from "./Model/Agencia";
 import { Cliente } from "./Model/Cliente";
 import { Endereco } from "./Model/Endereco";
-import { Conta } from "./Model/Conta";
+import { ContaCorrente } from "./Model/ContaCorrente";
+import { ContaPoupanca } from "./Model/ContaPoupanca";
 
 const endCarlos = new Endereco("PE", "Recife", "Santo Amaro", 
     "Maciel Monteiro", 345, "50070-780");
@@ -26,8 +27,8 @@ const vitoria = new Cliente("Vitoria Zambom", "321.456.789-00",
 const agenciaSuassuna = new Agencia("Ag Suassuna", 1235, 
         "agSuassun@banco.senac.br", "(81) 3344-5566", endAgSuassuna);
 
-const contaJoao = new Conta(joaoCarlos, 123456, agenciaSuassuna);
-const contaVitoria = new Conta(vitoria, 654321, agenciaSuassuna);
+const contaJoao = new ContaCorrente(joaoCarlos, 123456, agenciaSuassuna, 0.01);
+const contaVitoria = new ContaPoupanca(vitoria, 654321, agenciaSuassuna, 0.02);
 
 contaJoao.depositar(3000);
 contaJoao.realizarPagamento(120, "Internet");

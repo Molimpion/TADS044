@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
-public class Conta {
+public abstract class Conta {
 
 	private Cliente cliente;
 	private int numero;

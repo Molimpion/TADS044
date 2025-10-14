@@ -3,7 +3,7 @@ import { Cliente } from "./Cliente";
 import { Transacao } from "./Transacao";
 import { TipoTransacao } from "./Transacao";
 
-export class Conta {
+export abstract class Conta {
 
     private cliente: Cliente;
     private numero: number;
@@ -112,7 +112,7 @@ export class Conta {
             console.log("Nenhuma transação realizada.");
         } else {
             this.transacoes.forEach((transacao, index) => {
-                console.log(`\nTransação ${index + 1}:\n${transacao.toString()}`);
+                console.log(`${transacao.toString()}`);
             });
         }
         console.log(`Saldo Atual: R$ ${this.saldo.toFixed(2)}\n`);
